@@ -35,5 +35,5 @@ variable "instance_type" {
 variable "github_repo" {
   description = "GitHub repo allowed to assume the deploy role (owner/name)"
   type        = string
-  default     = "<github-user>/<repo>"
+  default     = "hemanth2k5-png/dockerized-app-aws-terraform-cicd"
 }
