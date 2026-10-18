@@ -35,3 +35,6 @@ output "public_ip" {
   description = "Public IP of the EC2 instance"
   value       = aws_instance.app.public_ip
 }
+output "github_deploy_role_arn" {
+  value = aws_iam_role.github_deploy.arn
+}
