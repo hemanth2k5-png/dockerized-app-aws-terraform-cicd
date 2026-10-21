@@ -24,7 +24,10 @@ data "aws_iam_policy_document" "github_trust" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repo}:ref:refs/heads/main"]
+      values = [
+        "repo:${var.github_repo}:ref:refs/heads/main",
+        "repo:hemanth2k5-png@232191376/dockerized-app-aws-terraform-cicd@1410780692:ref:refs/heads/main",
+      ]
     }
   }
 }
