@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return jsonify(message="Hello from AWS", version=os.getenv("APP_VERSION", "dev"))
+    return jsonify(message="Hello from AWS -v2 deployed by the pipeline", version=os.getenv("APP_VERSION", "dev"))
 
 @app.route("/health")
 def health():
