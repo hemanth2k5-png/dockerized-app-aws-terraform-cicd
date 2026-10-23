@@ -16,7 +16,8 @@ permissions:
 env:
   AWS_REGION: ap-south-2
   ECR_REPOSITORY: dockerized-app
-  INSTANCE_NAME: dockerized-app-app # CHECK: must match the Name tag from Step 1
+  INSTANCE_NAME: dockerized-app-app
+  LOG_GROUP: /dockerized-app/app
 
 jobs:
   test:
@@ -93,7 +94,7 @@ jobs:
             "aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REGISTRY",
             "docker pull $IMAGE",
             "docker rm -f app || true",
-            "docker run -d --name app --restart unless-stopped -p 80:8000 $IMAGE",
+            "docker run -d --name app --restart unless-stopped --log-driver awslogs --log-opt awslogs-region=$AWS_REGION --log-opt awslogs-group=$LOG_GROUP --log-opt awslogs-stream=app -p 80:8000 $IMAGE",
             "docker ps --filter name=app"
           ]}
           EOF
