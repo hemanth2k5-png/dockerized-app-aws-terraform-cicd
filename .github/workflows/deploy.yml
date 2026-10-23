@@ -16,7 +16,7 @@ permissions:
 env:
   AWS_REGION: ap-south-2
   ECR_REPOSITORY: dockerized-app
-  INSTANCE_NAME: dockerized-app-ec2 # CHECK: must match the Name tag from Step 1
+  INSTANCE_NAME: dockerized-app-app # CHECK: must match the Name tag from Step 1
 
 jobs:
   test:
