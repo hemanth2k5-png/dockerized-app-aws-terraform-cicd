@@ -1,4 +1,6 @@
 resource "aws_ecr_repository" "app" {
+  #checkov:skip=CKV_AWS_51:Images are tagged with the commit SHA, and immutable tags would make a re-run on the same commit fail
+  #checkov:skip=CKV_AWS_136:Default AES-256 encryption is on, and a customer-managed key adds cost with no benefit here
   name                 = var.project_name
   image_tag_mutability = "MUTABLE"
   force_delete         = true

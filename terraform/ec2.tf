@@ -3,6 +3,9 @@ data "aws_ssm_parameter" "al2023_ami" {
 }
 
 resource "aws_instance" "app" {
+  #checkov:skip=CKV_AWS_126:Detailed monitoring costs extra, and 5-minute metrics are enough for one instance
+  #checkov:skip=CKV_AWS_88:Public app by design, no NAT or ALB to limit cost, managed through SSM not SSH
+  ebs_optimized               = true
   ami                         = data.aws_ssm_parameter.al2023_ami.value
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.public.id

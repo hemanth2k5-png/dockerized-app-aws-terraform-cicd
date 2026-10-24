@@ -9,6 +9,7 @@ resource "aws_security_group" "app" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "http" {
+  #checkov:skip=CKV_AWS_260:Public web app, so port 80 is open on purpose. HTTPS with ACM is a stretch goal
   security_group_id = aws_security_group.app.id
   description       = "HTTP from the internet"
   from_port         = 80
