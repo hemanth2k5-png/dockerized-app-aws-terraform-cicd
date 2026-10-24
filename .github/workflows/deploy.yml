@@ -6,6 +6,10 @@ on:
     paths-ignore:
       - "docs/**"
       - "**.md"
+      - "terraform/**"
+      - "bootstrap/**"
+      - ".github/workflows/terraform-ci.yml"
+
   pull_request:
   workflow_dispatch:
 
