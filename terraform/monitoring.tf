@@ -5,6 +5,8 @@ variable "alert_email" {
 
 # Container logs land here (see the awslogs log driver in the deploy step)
 resource "aws_cloudwatch_log_group" "app" {
+  #checkov:skip=CKV_AWS_158:CloudWatch Logs encrypts at rest by default, and a customer-managed key costs extra
+  #checkov:skip=CKV_AWS_338:7-day retention is deliberate cost control for a lab
   name              = "/${var.project_name}/app"
   retention_in_days = 7
 
@@ -15,6 +17,7 @@ resource "aws_cloudwatch_log_group" "app" {
 
 # Where alarm notifications go
 resource "aws_sns_topic" "alerts" {
+  #checkov:skip=CKV_AWS_26:CloudWatch alarms cannot publish to a topic encrypted with the AWS-managed key
   name = "${var.project_name}-alerts"
 }
 
