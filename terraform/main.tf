@@ -1,8 +1,10 @@
 data "aws_availability_zones" "available" {
+  #checkov:skip=CKV_AWS_394:Result is only used to pick one subnet zone, so a new zone changes nothing here
   state = "available"
 }
 
 resource "aws_vpc" "main" {
+  #checkov:skip=CKV2_AWS_11:Flow logs add logging cost and are out of scope for this lab
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -24,7 +26,7 @@ resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.public_subnet_cidr
   availability_zone       = data.aws_availability_zones.available.names[0]
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = false
 
   tags = {
     Name = "${var.project_name}-public-subnet"
@@ -47,4 +49,9 @@ resource "aws_route_table" "public" {
 resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public.id
+}
+
+# Lock down the VPC's default security group (nothing uses it)
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.main.id
 }
